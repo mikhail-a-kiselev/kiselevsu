@@ -1,4 +1,6 @@
-function Contact() {
+import React from 'react'
+
+function Contact () {
   return <div>Contact info</div>
 }
 

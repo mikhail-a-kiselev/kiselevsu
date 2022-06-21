@@ -1,6 +1,6 @@
-import type { NextPage } from "next";
+import React from 'react'
 
-const Home: NextPage = () => {
+function Home () {
   return <div>Welcome to Next.js!</div>
 }
 
