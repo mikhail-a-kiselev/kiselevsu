@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import React from 'react'
 import type { AppProps } from 'next/app'
 import Layout from '../layouts'
