@@ -31,7 +31,7 @@ type WorkItem = {
   description: any
 };
 
-function GetSiteLink (site: any, exists: boolean){
+function GetSiteLink (site: any, exists: boolean) {
   return <p><b>Сайт:</b> {exists ? <a target="_blank" rel="noreferrer" href={site}>{new URL(site).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(site).host}</span>}</p>
 }
 
