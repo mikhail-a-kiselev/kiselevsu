@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, ListGroup, Row, Col, Image } from 'react-bootstrap'
+import { Card, ListGroup, Row, Col } from 'react-bootstrap'
 
 type EducationItem = {
   from: number,
@@ -10,9 +10,10 @@ type EducationItem = {
   siteExists:boolean,
   location: string,
   faculty: any,
+  department: any,
   speciality: string,
   value: string,
-  description: string
+  description: any
 };
 type WorkItem = {
   from: number,
@@ -30,13 +31,16 @@ type WorkItem = {
   description: any
 };
 
+function GetSiteLink (site: any, exists: boolean){
+  return <p><b>Сайт:</b> {exists ? <a target="_blank" rel="noreferrer" href={site}>{new URL(site).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(site).host}</span>}</p>
+}
+
 function GetWorkItem (item: WorkItem, key:any) {
   const ogrn = item.companyOGRN.toString()
   return <ListGroup.Item>
     <Row>
       <Col md={3} xl={2}>
         <Card.Title>
-          <Image roundedCircle={true} />
           {item.title}
         </Card.Title>
         <Card.Subtitle>
@@ -48,7 +52,7 @@ function GetWorkItem (item: WorkItem, key:any) {
       </Col>
       <Col md={9} xl={10}>
         {item.companyDescription.length ? <p>{item.companyDescription}</p> : ''}
-        {item.site ? <p><b>Сайт:</b> {item.siteExists ? <a target="_blank" rel="noreferrer" href={item.site}>{new URL(item.site).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(item.site).host}</span>}</p> : ''}
+        {item.site ? GetSiteLink(item.site, item.siteExists) : ''}
         <p><b>Позиция:</b> {item.position} {item.positionDescription.length ? <span className="text-muted">({item.positionDescription})</span> : ''}</p>
         {item.description}
       </Col>
@@ -58,13 +62,19 @@ function GetWorkItem (item: WorkItem, key:any) {
 function GetEducationItem (item: EducationItem, key:any) {
   return <ListGroup.Item key={key}>
     <Row>
-      <Col xs={12}>
-      <Card.Title>{item.title}</Card.Title>
+      <Col md={3} xl={2}>
+        <Card.Title>{item.title}</Card.Title>
+        {item.location}<br />
+        {item.from.toString()}{item.from !== item.to ? ' - ' + item.to.toString() : ''}
       </Col>
-      <Col md={3}>
-        {item.from.toString()} - {item.to.toString()}
+      <Col md={9} xl={10}>
+        {item.site ? GetSiteLink(item.site, item.siteExists) : ''}
+        {item.faculty ? <p><b>Факультет:</b> {item.faculty}</p> : ''}
+        {item.department ? <p><b>Кафедра:</b> {item.department}</p> : ''}
+        {item.speciality ? <p><b>Специальность:</b> {item.speciality}</p> : ''}
+        {item.value ? <p><b>Образование:</b> {item.value}</p> : ''}
+        {item.description ? item.description : ''}
       </Col>
-      <Col md={9}></Col>
     </Row>
   </ListGroup.Item>
 }
@@ -72,14 +82,57 @@ function GetEducationItem (item: EducationItem, key:any) {
 function About () {
   const education = [
     {
-      from: 1996,
-      to: 2006,
-      title: 'Средняя общеобразовательная школа №52',
+      from: 2011,
+      to: 2014,
+      title: 'Институт Международного Права и Экономики им. А.С.Грибоедова (ульяновский филиал)',
       image: false,
-      site: 'http://sci-service.info',
+      site: 'http://iile.ru',
+      siteExists: true,
+      location: 'Ульяновск',
+      faculty: 'экономический',
+      department: 'менеджмента и управления персоналом',
+      speciality: 'Менеджмент организации',
+      value: 'высшее (бакалавр)',
+      description: 'Ускоренное отделение, т.к. уже было высшее образование.'
+    },
+    {
+      from: 2008,
+      to: 2011,
+      title: 'Ульяновский Государственный Университет',
+      image: false,
+      site: 'http://ulsu.ru',
+      siteExists: true,
+      location: 'Ульяновск',
+      faculty: 'математики и информационных технологий (ФМиИТ)',
+      department: 'информационных технологий',
+      speciality: 'Прикладная информатика',
+      value: 'высшее (специалист)',
+      description: 'Ускоренное отделение, т.к. было профильное среднее специальное образование.'
+    },
+    {
+      from: 2006,
+      to: 2008,
+      title: 'Высший колледж УлГУ «Засвияжье»',
+      image: false,
+      site: 'http://vkzas.ulsu.ru',
       siteExists: false,
       location: 'Ульяновск',
       faculty: false,
+      department: false,
+      speciality: 'Программное обеспечение вычислительной техники и автоматизированных систем',
+      value: 'среднее специальное (техник)',
+      description: 'Программа предусматривала три года обучения, но занятия по первому курсу мы прошли параллельно обучению в школе.'
+    },
+    {
+      from: 1996,
+      to: 2006,
+      title: 'Средняя школа №52',
+      image: false,
+      site: false,
+      siteExists: false,
+      location: 'Ульяновск',
+      faculty: false,
+      department: false,
       speciality: 'Программное обеспечение вычислительной техники и автоматизированных систем',
       value: 'среднее',
       description: 'Колледжный класс, т.е. в 10-11 класах проводились дополнительные занятия по специальности «Программное обеспечение ВТ и АС», что засчитывалось за один курс коллежда.'
@@ -133,7 +186,7 @@ function About () {
       position: 'Индивидуальный предприниматель',
       positionDescription: 'Founder, CEO',
       description: <div>
-        <p>Магазин формата у дома. Реклама, аналитика, контроль.</p>
+        <p>Магазин формата «у дома». Реклама, аналитика, контроль.</p>
       </div>
     },
     {
@@ -304,26 +357,19 @@ function About () {
     </Card>
     <p></p>
     <Card>
-      <Card.Header>Образование</Card.Header>
-      <ListGroup variant="flush">
-        {education.map((item: EducationItem, key: any) => {
-          return GetEducationItem(item, key)
-        })}
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-      </ListGroup>
-      <Card.Body>
-        <Card.Title>Образование</Card.Title>
-        <Card.Text>3 класса церковно-приходской школы</Card.Text>
-      </Card.Body>
-    </Card>
-    <p></p>
-    <Card>
       <Card.Header>Опыт работы</Card.Header>
       <ListGroup variant="flush">
         {work.map((item:WorkItem, key: any) => {
           return GetWorkItem(item, key)
+        })}
+      </ListGroup>
+    </Card>
+    <p></p>
+    <Card>
+      <Card.Header>Образование</Card.Header>
+      <ListGroup variant="flush">
+        {education.map((item: EducationItem, key: any) => {
+          return GetEducationItem(item, key)
         })}
       </ListGroup>
     </Card>
