@@ -20,7 +20,7 @@ function GetMenuItem(item: TopNavItem, key:any, route:any) {
 function Topnav() {
   const links = [
     {"link":"/about", "text":texts.ABOUT},
-    {"link":"/portfolio", "text":texts.PORTFOLIO},
+//    {"link":"/portfolio", "text":texts.PORTFOLIO},
     {"link":"/contact", "text":texts.CONTACT},
   ];
   const route = useRouter().route;

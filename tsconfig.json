@@ -12,7 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
-    "tsBuildInfoFile": "/tmp/my-proj/tsbuildinfo",
+//    "tsBuildInfoFile": "/tsbuildinfo",
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
