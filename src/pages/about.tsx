@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, ListGroup, Row, Col } from 'react-bootstrap'
+import Head from 'next/head';
 
 type EducationItem = {
   from: number,
@@ -348,6 +349,39 @@ function About () {
     }
   ]
   return <div>
+    <Head>
+      <title key="title">Киселев Михаил Александрович (Ульяновск), образование и опыт работы</title>
+      <meta
+            key="description"
+            name="description"
+            content={"Подробная информация об образовании и опыте работы"}
+        />
+        <meta
+            key="og:type"
+            name="og:type"
+            content={"profile"}
+        />
+        <meta
+            key="og:title"
+            name="og:title"
+            content={"Киселев Михаил Александрович, образование и опыт работы"}
+        />
+        <meta
+            key="og:description"
+            name="og:description"
+            content={"Подробная информация об образовании и опыте работы"}
+        />
+        <meta
+            key="og:url"
+            name="og:url"
+            content={"https://kiselev.su/about"}
+        />
+        <meta
+            key="og:image"
+            name="og:image"
+            content={""}
+        />
+    </Head>
     <Card>
       <Card.Body>
         Киселев Михаил Александрович <br />

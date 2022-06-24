@@ -10,11 +10,11 @@ type TopNavItem = {
 
 
 function GetMenuItem(item: TopNavItem, key:any, route:any) {
-  return  <li className="nav-item" key={key}>
+  return  <div className="nav-item" key={key}>
     <NextLink  href={item.link} data-route="links">
       <a className={route == item.link ? "nav-link disabled" : "nav-link" }>{item.text}</a>
     </NextLink >
-  </li>
+  </div>
 }
 
 function Topnav() {
