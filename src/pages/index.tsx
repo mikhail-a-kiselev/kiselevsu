@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
-import Head from 'next/head';
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 function Home () {
@@ -9,7 +9,6 @@ function Home () {
     e.preventDefault()
     router.push('/about')
   }
-  
   const contactClick = (e: any) => {
     e.preventDefault()
     router.push('/contact')
@@ -20,32 +19,32 @@ function Home () {
       <meta
             key="description"
             name="description"
-            content={"Персональный сайт фронтенд-разработчика"}
+            content="Персональный сайт фронтенд-разработчика"
         />
         <meta
             key="og:type"
             name="og:type"
-            content={"profile"}
+            content="profile"
         />
         <meta
             key="og:title"
             name="og:title"
-            content={"Персональный сайт Михаила Киселева"}
+            content="Персональный сайт Михаила Киселева"
         />
         <meta
             key="og:description"
             name="og:description"
-            content={"Персональный сайт фронтенд-разработчика"}
+            content="Персональный сайт фронтенд-разработчика"
         />
         <meta
             key="og:url"
             name="og:url"
-            content={"https://kiselev.su/"}
+            content="https://kiselev.su/"
         />
         <meta
             key="og:image"
             name="og:image"
-            content={""}
+            content=""
         />
     </Head>
     <Card.Body>

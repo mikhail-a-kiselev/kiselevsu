@@ -1,5 +1,5 @@
 import React from 'react'
-import Head from 'next/head';
+import Head from 'next/head'
 
 function Contact () {
   return <div>
@@ -8,32 +8,32 @@ function Contact () {
       <meta
             key="description"
             name="description"
-            content={"Как связаться с Михаилом Киселевым?"}
+            content="Как связаться с Михаилом Киселевым?"
         />
         <meta
             key="og:type"
             name="og:type"
-            content={"profile"}
+            content="profile"
         />
         <meta
             key="og:title"
             name="og:title"
-            content={"Контактная информация"}
+            content="Контактная информация"
         />
         <meta
             key="og:description"
             name="og:description"
-            content={"Как связаться с Михаилом Киселевым?"}
+            content="Как связаться с Михаилом Киселевым?"
         />
         <meta
             key="og:url"
             name="og:url"
-            content={"https://kiselev.su/contact"}
+            content="https://kiselev.su/contact"
         />
         <meta
             key="og:image"
             name="og:image"
-            content={""}
+            content=""
         />
     </Head>
     <p><a href="https://github.com/mikhail-a-kiselev">Github</a></p>
