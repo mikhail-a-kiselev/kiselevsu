@@ -8,8 +8,8 @@ import photo from '../assets/img/photo.jpg'
 function Home () {
   const router = useRouter()
   const [show, setShow] = useState(false)
-  const handlePhotoClose = () => setShow(false)
-  const handlePhotoShow = () => setShow(true)
+  const photoClose = () => setShow(false)
+  const photoShow = () => setShow(true)
   const aboutClick = (e: any) => {
     e.preventDefault()
     router.push('/about')
@@ -54,7 +54,7 @@ function Home () {
     </Head>
     <Card>
       <Card.Body>
-        <Image alt="Киселев Михаил Александрович, frontend разработчик" onClick={handlePhotoShow} roundedCircle={true} src={photo.src} width={150} height={200} className="float-end"></Image>
+        <Image alt="Киселев Михаил Александрович, frontend разработчик" onClick={photoShow} roundedCircle={true} src={photo.src} width={150} height={200} className="float-end"></Image>
         <Card.Text>
           Здравствуйте, меня зовут Михаил Киселев, я frontend-разработчик.
         </Card.Text>
@@ -69,13 +69,13 @@ function Home () {
         <Button variant="primary" onClick={contactClick}>Связаться со мной</Button>
       </Card.Body>
     </Card>
-    <Modal show={show} onHide={handlePhotoClose}>
+    <Modal show={show} onHide={photoClose}>
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
-        <Image alt="Киселев Михаил Александрович, frontend разработчик" fluid={true} src={photo.src} className="float-end"></Image>
+        <Image alt="Киселев Михаил Александрович, frontend разработчик" fluid={true} src={photo.src}></Image>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={handlePhotoClose}>
+        <Button variant="primary" onClick={photoClose}>
           Закрыть
         </Button>
       </Modal.Footer>
