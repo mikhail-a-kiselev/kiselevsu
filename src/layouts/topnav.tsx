@@ -5,23 +5,24 @@ import * as texts from '../texts/navigation'
 
 type TopNavItem = {
   link: any,
-  text: String
+  text: string,
+  description: string,
 };
 
 
 function GetMenuItem(item: TopNavItem, key:any, route:any) {
   return  <div className="nav-item" key={key}>
     <NextLink  href={item.link} data-route="links">
-      <a className={route == item.link ? "nav-link disabled" : "nav-link" }>{item.text}</a>
+      <a className={route == item.link ? "nav-link disabled" : "nav-link" } title={item.description}>{item.text}</a>
     </NextLink >
   </div>
 }
 
 function Topnav() {
   const links = [
-    {"link":"/about", "text":texts.ABOUT},
-//    {"link":"/portfolio", "text":texts.PORTFOLIO},
-    {"link":"/contact", "text":texts.CONTACT},
+    {"link": "/about", "text": texts.ABOUT, "description": texts.DESCRIPTION_ABOUT},
+//    {"link": "/portfolio", "text": texts.PORTFOLIO, "description": texts.DESCRIPTION_PORTFOLIO},
+    {"link": "/contact", "text": texts.CONTACT,  "description": texts.DESCRIPTION_CONTACT},
   ];
   const route = useRouter().route;
 
