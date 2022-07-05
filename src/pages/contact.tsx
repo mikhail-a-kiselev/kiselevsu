@@ -40,6 +40,7 @@ function Contact () {
     <p><a href="https://tenchat.ru/MikhailKiselev">TenChat</a></p>
     <p><a href="https://vk.com/mikhail_kiselev">VK</a></p>
     <p><a href="https://ok.ru/mikhailkiselev">Odnoklassniki</a></p>
+    <p><a href="https://ulyanovsk.hh.ru/resume/f3a055e4ff064e22de0039ed1f773952703973">HH</a></p>
     <p><b>E-mail:</b> <a href="mailto:kiselev@simbirsk.ru">kiselev@simbirsk.ru</a></p>
   </div>
 }
