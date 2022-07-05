@@ -38,7 +38,7 @@ function GetSiteLink (site: any, exists: boolean) {
 
 function GetWorkItem (item: WorkItem, key:any) {
   const ogrn = item.companyOGRN.toString()
-  return <ListGroup.Item>
+  return <ListGroup.Item key={key}>
     <Row>
       <Col md={3} xl={2}>
         <Card.Title>
