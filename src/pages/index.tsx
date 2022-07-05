@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Card, Button, Modal } from 'react-bootstrap'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -8,9 +7,9 @@ import photo from '../assets/img/photo.jpg'
 
 function Home () {
   const router = useRouter()
-  const [show, setShow] =  useState(false);
-  const handlePhotoClose = () => setShow(false);
-  const handlePhotoShow = () => setShow(true);
+  const [show, setShow] = useState(false)
+  const handlePhotoClose = () => setShow(false)
+  const handlePhotoShow = () => setShow(true)
   const aboutClick = (e: any) => {
     e.preventDefault()
     router.push('/about')
@@ -55,7 +54,7 @@ function Home () {
     </Head>
     <Card>
       <Card.Body>
-        <Image fluid={true} alt="Киселев Михаил Александрович, frontend разработчик" onClick={handlePhotoShow} roundedCircle={true} src={photo.src} width={150} height={200} className="float-end"></Image>
+        <Image alt="Киселев Михаил Александрович, frontend разработчик" onClick={handlePhotoShow} roundedCircle={true} src={photo.src} width={150} height={200} className="float-end"></Image>
         <Card.Text>
           Здравствуйте, меня зовут Михаил Киселев, я frontend-разработчик.
         </Card.Text>
@@ -73,7 +72,7 @@ function Home () {
     <Modal show={show} onHide={handlePhotoClose}>
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
-        <Image alt="Киселев Михаил Александрович, frontend разработчик" src={photo.src} width={"100%"} className="float-end"></Image>
+        <Image alt="Киселев Михаил Александрович, frontend разработчик" fluid={true} src={photo.src} className="float-end"></Image>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={handlePhotoClose}>
