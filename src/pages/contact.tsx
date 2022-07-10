@@ -49,34 +49,35 @@ function Contact () {
     <p><b>E-mail:</b> <a href="mailto:kiselev@simbirsk.ru">kiselev@simbirsk.ru</a></p>
     <style jsx>{`
       .contact-link {
-        font-size:0px;
-        width:96px;
-        height:64px;
+        font-size: 0px;
+        width: 96px;
+        height: 64px;
+        margin: 16px;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: contain;
         display: inline-block;
-        opacity:0.6;
+        opacity: 0.6;
         transition: 0.5s;
         transition-property: opacity;
-        &:hover{
-          opacity:1;
+        &:hover {
+          opacity: 1;
         }
-        &.contact-link{
+        &.contact-link {
           &-github{
-            background-image:url(${github.src})
+            background-image: url(${github.src})
           }
-          &-tenchat{
-            background-image:url(${tenchat.src})
+          &-tenchat {
+            background-image: url(${tenchat.src})
           }
-          &-hh{
-            background-image:url(${hh.src});
+          &-hh {
+            background-image: url(${hh.src});
           }
-          &-vk{
-            background-image:url(${vk.src})
+          &-vk {
+            background-image: url(${vk.src})
           }
-          &-ok{
-            background-image:url(${ok.src})
+          &-ok {
+            background-image: url(${ok.src})
           }
         }
       }

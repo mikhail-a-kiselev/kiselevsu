@@ -8,7 +8,7 @@ type EducationItem = {
   title: string,
   image: any,
   site: any,
-  siteExists:boolean,
+  siteExists: boolean,
   location: string,
   faculty: any,
   department: any,
