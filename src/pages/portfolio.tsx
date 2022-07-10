@@ -20,6 +20,20 @@ import childrenscience4 from '../assets/img/portfolio/childrenscience4.png'
 import childrenscience5 from '../assets/img/portfolio/childrenscience5.png'
 import childrenscience6 from '../assets/img/portfolio/childrenscience6.png'
 
+import linesclassic1 from '../assets/img/portfolio/linesclassic1.jpg'
+import linesclassic2 from '../assets/img/portfolio/linesclassic2.jpg'
+import linesclassic3 from '../assets/img/portfolio/linesclassic3.jpg'
+import trivialand1 from '../assets/img/portfolio/trivialand1.jpg'
+import trivialand2 from '../assets/img/portfolio/trivialand2.jpg'
+import trivialand3 from '../assets/img/portfolio/trivialand3.jpg'
+import aqualines1 from '../assets/img/portfolio/aqualines1.jpg'
+import aqualines2 from '../assets/img/portfolio/aqualines2.jpg'
+import aqualines3 from '../assets/img/portfolio/aqualines3.jpg'
+import aqualines4 from '../assets/img/portfolio/aqualines4.jpg'
+import spartans1 from '../assets/img/portfolio/3spartans1.jpg'
+import spartans2 from '../assets/img/portfolio/3spartans2.jpg'
+import spartans3 from '../assets/img/portfolio/3spartans3.jpg'
+
 type projectsItem = {
   title: string,
   description: string
@@ -66,7 +80,12 @@ function Portfolio () {
       title: 'Мобильные игры (Phonegap/Cordova)',
       description: 'Мобильные игры для Android и Windows Phone. Написаны на JavaScript.',
       technologies: ['Vanilla JS', 'CSS', 'Cordova', 'Java'],
-      pics: [],
+      pics: [
+        linesclassic1.src, linesclassic2.src, linesclassic3.src,
+        trivialand1.src, trivialand2.src, trivialand3.src,
+        aqualines1.src, aqualines2.src, aqualines3.src, aqualines4.src,
+        spartans1.src, spartans2.src, spartans3.src
+      ],
       site: 'http://code-mech.com',
       siteExists: true
     }
