@@ -128,18 +128,13 @@ function Portfolio () {
       {projects.map((item, i) => {
         return <Col xs={12} sm={6} md={4} className="mb-3" key={i}>
           <Card>
-            <Card.Body>
-            <Card.Title>{item.title}</Card.Title>
+
               {item.pics.length
                 ? (
               <Carousel>
                 {item.pics.map((pic, j) => {
                   return <Carousel.Item key={j}>
-                    <img
-                        className="d-block w-100"
-                        src={pic}
-                        alt={item.title}
-                    />
+                    <div style={{ backgroundImage: `url('${pic}')` }} className="carousel-item-image"></div>
                     </Carousel.Item>
                 })}
               </Carousel>
@@ -148,6 +143,8 @@ function Portfolio () {
                     ''
                   )
               }
+          <Card.Body>
+            <Card.Title>{item.title}</Card.Title>
               <Card.Text>
                 {item.description}
               </Card.Text>
@@ -157,7 +154,14 @@ function Portfolio () {
       })}
     </Row>
     <style jsx>{`
-
+      .carousel-item-image {
+        width: 100%;
+        height: 200px;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: rgba(0,0,0,.15);
+      }
     `}</style>
   </>
 }
