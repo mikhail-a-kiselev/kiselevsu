@@ -1,8 +1,15 @@
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { Form, Button } from 'react-bootstrap'
-import React from 'react'
+import React, { ChangeEventHandler, MouseEventHandler } from 'react'
 
-function FilterInput (props: any) {
+type filterInputProps = {
+    show: boolean,
+    value: string,
+    onClick: MouseEventHandler<HTMLButtonElement>,
+    onChange: ChangeEventHandler
+}
+
+function FilterInput (props: filterInputProps) {
   return <>
     <Button onClick={props.onClick} variant={props.show ? 'danger' : 'primary'} size="sm" className="float-end">
       {props.show ? 'Cбросить фильтр' : 'Включить фильтр'}

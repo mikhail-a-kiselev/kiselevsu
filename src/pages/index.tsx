@@ -10,12 +10,12 @@ function Home () {
   const [show, setShow] = useState(false)
   const photoClose = () => setShow(false)
   const photoShow = () => setShow(true)
-  const aboutClick = (e: any) => {
-    e.preventDefault()
+  const aboutClick = (event: React.MouseEvent) => {
+    event.preventDefault()
     router.push('/about')
   }
-  const contactClick = (e: any) => {
-    e.preventDefault()
+  const contactClick = (event: React.MouseEvent) => {
+    event.preventDefault()
     router.push('/contact')
   }
   return <>
