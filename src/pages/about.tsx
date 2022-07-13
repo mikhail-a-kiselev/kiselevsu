@@ -1,27 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, ListGroup, Row, Col } from 'react-bootstrap'
 import Head from 'next/head'
+import jsxToString from 'react-element-to-jsx-string'
+import FilterInput from '../components/filterInput'
 
 type EducationItem = {
+  key: number,
   from: number,
   to: number,
   title: string,
-  image: any,
-  site: any,
+  image: Partial<string & boolean>,
+  site: Partial<string & boolean>,
   siteExists: boolean,
   location: string,
-  faculty: any,
-  department: any,
+  faculty: Partial<string & boolean>,
+  department: Partial<string & boolean>,
   speciality: string,
   value: string,
-  description: any
+  description: string,
+  tags: string
 };
 type WorkItem = {
+  key: number,
   from: number,
   to: number,
   title: string,
-  image: any,
-  site: any,
+  image: Partial<string & boolean>,
+  site: Partial<string & boolean>,
   siteExists: boolean,
   company: string,
   companyOGRN: number,
@@ -29,16 +34,31 @@ type WorkItem = {
   location: string,
   position: string,
   positionDescription: string,
-  description: any
+  description: any,
+  tags: string
 };
+
+function checkItem (item: Partial<WorkItem & EducationItem>, str: string) {
+  const values = Object.values(item)
+  let correct = str.length === 0
+  values.map((val) => {
+    if ((typeof val === 'string' || typeof val === 'number') && val.toString().toLowerCase().includes(str.toLowerCase())) {
+      correct = true
+    } else if (typeof val === 'object' && jsxToString(val).toLowerCase().includes(str.toLowerCase())) {
+      correct = true
+    }
+    return []
+  })
+  return correct
+}
 
 function GetSiteLink (site: any, exists: boolean) {
   return <p><b>Сайт:</b> {exists ? <a target="_blank" rel="noreferrer" href={site}>{new URL(site).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(site).host}</span>}</p>
 }
 
-function GetWorkItem (item: WorkItem, key:any) {
+function GetWorkItem (item: WorkItem) {
   const ogrn = item.companyOGRN.toString()
-  return <ListGroup.Item key={key}>
+  return <ListGroup.Item key={item.key}>
     <Row>
       <Col md={3} xl={2}>
         <Card.Title>
@@ -60,8 +80,8 @@ function GetWorkItem (item: WorkItem, key:any) {
     </Row>
   </ListGroup.Item>
 }
-function GetEducationItem (item: EducationItem, key:any) {
-  return <ListGroup.Item key={key}>
+function GetEducationItem (item: EducationItem) {
+  return <ListGroup.Item key={item.key}>
     <Row>
       <Col md={3} xl={2}>
         <Card.Title>{item.title}</Card.Title>
@@ -81,8 +101,31 @@ function GetEducationItem (item: EducationItem, key:any) {
 }
 
 function About () {
+  const [workFilter, setWorkFilter] = useState<string>('')
+  const [educationFilter, setEducationFilter] = useState<string>('')
+  const [workFilterShow, setWorkFilterShow] = useState<boolean>(false)
+  const [educationFilterShow, setEducationFilterShow] = useState<boolean>(false)
+  const changeWorkFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWorkFilter(event.target.value)
+  }
+  const changeEducationFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEducationFilter(event.target.value)
+  }
+  const clickShowWorkFilter = () => {
+    if (workFilterShow) {
+      setWorkFilter('')
+    }
+    setWorkFilterShow(!workFilterShow)
+  }
+  const clickShowEducationFilter = () => {
+    if (educationFilterShow) {
+      setEducationFilter('')
+    }
+    setEducationFilterShow(!educationFilterShow)
+  }
   const education = [
     {
+      key: 4,
       from: 2011,
       to: 2014,
       title: 'Институт Международного Права и Экономики им. А.С.Грибоедова (ульяновский филиал)',
@@ -94,9 +137,11 @@ function About () {
       department: 'менеджмента и управления персоналом',
       speciality: 'Менеджмент организации',
       value: 'высшее (бакалавр)',
-      description: 'Ускоренное отделение, т.к. уже было высшее образование.'
+      description: 'Ускоренное отделение, т.к. уже было высшее образование.',
+      tags: 'ИМПЭ'
     },
     {
+      key: 3,
       from: 2008,
       to: 2011,
       title: 'Ульяновский Государственный Университет',
@@ -108,9 +153,11 @@ function About () {
       department: 'информационных технологий',
       speciality: 'Прикладная информатика',
       value: 'высшее (специалист)',
-      description: 'Ускоренное отделение, т.к. было профильное среднее специальное образование.'
+      description: 'Ускоренное отделение, т.к. было профильное среднее специальное образование.',
+      tags: 'УлГу'
     },
     {
+      key: 2,
       from: 2006,
       to: 2008,
       title: 'Высший колледж УлГУ «Засвияжье»',
@@ -122,9 +169,11 @@ function About () {
       department: false,
       speciality: 'Программное обеспечение вычислительной техники и автоматизированных систем',
       value: 'среднее специальное (техник)',
-      description: 'Программа предусматривала три года обучения, но занятия по первому курсу мы прошли параллельно обучению в школе.'
+      description: 'Программа предусматривала три года обучения, но занятия по первому курсу мы прошли параллельно обучению в школе.',
+      tags: 'ВК Засвияжье'
     },
     {
+      key: 1,
       from: 1996,
       to: 2006,
       title: 'Средняя школа №52',
@@ -136,11 +185,13 @@ function About () {
       department: false,
       speciality: 'Программное обеспечение вычислительной техники и автоматизированных систем',
       value: 'среднее',
-      description: 'Колледжный класс, т.е. в 10-11 класах проводились дополнительные занятия по специальности «Программное обеспечение ВТ и АС», что засчитывалось за один курс коллежда.'
+      description: 'Колледжный класс, т.е. в 10-11 класах проводились дополнительные занятия по специальности «Программное обеспечение ВТ и АС», что засчитывалось за один курс коллежда.',
+      tags: 'МОУ СОШ средняя общеобразовательная школа'
     }
   ]
   const work = [
     {
+      key: 12,
       from: 2021,
       to: 2022,
       title: 'ИП Киселев',
@@ -153,12 +204,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Индивидуальный предприниматель',
       positionDescription: 'Frontend',
-      description: <div>
-        <p>Разработка интерактивных заданий для проекта Дети и наука (на собственном фреймворке и на новом, основанном на vue.js).</p>
-        <p>Работы по поддержанию ИТ-инфраструктуры.</p>
-      </div>
+      description: 'Разработка интерактивных заданий для проекта Дети и наука (по окружающему миру на собственном фреймворке и по астрономии на новом, основанном на vue.js). Данные интерактивы использовались и используются на нескольких образовательных платформах, в том числе в Яндекс.Учебнике. Работы по поддержанию ИТ-инфраструктуры.',
+      tags: 'ДиН Childrenscience okrmir okrumir'
     },
     {
+      key: 11,
       from: 2022,
       to: 2022,
       title: 'AZdoc',
@@ -171,9 +221,11 @@ function About () {
       location: 'Ульяновск',
       position: 'По договору ГПХ',
       positionDescription: 'frontend',
-      description: 'Добавление фич в панель управления Headless CMS. Используется React-Admin.'
+      description: 'Добавление фич в панель управления Headless CMS. Используется React-admin.',
+      tags: 'Симбирские информационные технологии'
     },
     {
+      key: 10,
       from: 2021,
       to: 2022,
       title: 'ОВОЩНОЙ73.РФ',
@@ -186,11 +238,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Индивидуальный предприниматель',
       positionDescription: 'Founder, CEO',
-      description: <div>
-        <p>Магазин формата «у дома». Реклама, аналитика, контроль.</p>
-      </div>
+      description: 'Магазин формата «у дома». Реклама, аналитика, контроль.',
+      tags: ''
     },
     {
+      key: 9,
       from: 2020,
       to: 2021,
       title: 'Sreda',
@@ -203,12 +255,11 @@ function About () {
       location: 'Москва (удаленно)',
       position: 'Инженер-программист',
       positionDescription: 'Fullstack',
-      description: <div>
-        <p>Фронтенд и бэкенд, основа - Bitrix. Проект включал два сайта с общей авторизацией: ярмарку (т.е. обычный интернет-магазин готовых овощей и фруктов) и ферму (т.е. покупатель оформляет заказ, например, покупает дерево, фермер это дерево сажает, обеспечивает уход, урожай отправляется почтой). Если с первым все понятно, то со вторым очень много нюансов.</p>
-        <p>Текущий сайт компании делал уже кто-то другой, того функционала там нет.</p>
-      </div>
+      description: 'Фронтенд и бэкенд, основа - Bitrix. Проект включал два сайта с общей авторизацией: ярмарку (т.е. обычный интернет-магазин готовых овощей и фруктов) и ферму (т.е. покупатель оформляет заказ, например, покупает дерево, фермер это дерево сажает, обеспечивает уход, урожай отправляется почтой). Если с первым все понятно, то со вторым очень много нюансов.',
+      tags: 'Среда'
     },
     {
+      key: 8,
       from: 2019,
       to: 2020,
       title: 'ЖК.онлайн',
@@ -228,9 +279,11 @@ function About () {
         <p><b>CRM для управляющих компаний.</b> Новости компании, диспетчерская (с приемом звонков, подключением мессенджеров), инструмент для проведения общих собраний собственников, загрузка реестров, онлайн-касса, сотрудники с ролями и т.п. React. Интеграции с Dadata, Pact и другими сервисами.</p>
         <p>Установка виджета на сайтах в особо сложных случаях.</p>
         <p>Везде один и тот же бэкенд, REST JSON API.</p>
-      </div>
+      </div>,
+      tags: 'Оплачу ЖКХ Тинькофф Тиньков'
     },
     {
+      key: 7,
       from: 2019,
       to: 2019,
       title: 'CloudPayments',
@@ -243,9 +296,11 @@ function About () {
       location: 'Москва (удаленно)',
       position: 'по договору ГПХ',
       positionDescription: 'Frontend',
-      description: 'Работа над проектом ЖК.онлайн (ранее назывался Оплачу)'
+      description: 'Работа над проектом ЖК.онлайн (ранее назывался Оплачу)',
+      tags: 'Оплачу ЖКХ Тинькофф Тиньков'
     },
     {
+      key: 6,
       from: 2014,
       to: 2019,
       title: 'Симбирские информационные технологии',
@@ -270,9 +325,11 @@ function About () {
         Интерактивы с бэкендом не взаимодействуют. Данные интерактивы используются в нескольких образовательных платформах, в том числе Центр Педагогического Мастерства и Яндекс.Учебник. Frontend.
         </p>
         <p>Также были небольшие проекты, такие как лендинги, доработки интернет-магазинов и т.п.</p>
-      </div>
+      </div>,
+      tags: 'Симбирские информационные технологии codemech Code Mechanics'
     },
     {
+      key: 5,
       from: 2012,
       to: 2013,
       title: 'Симбирск доставка',
@@ -285,9 +342,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Индивидуальный предприниматель',
       positionDescription: 'Founder, CEO',
-      description: 'Служба курьерской доставки'
+      description: 'Служба курьерской доставки',
+      tags: ''
     },
     {
+      key: 4,
       from: 2011,
       to: 2012,
       title: 'МТС',
@@ -300,9 +359,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Специалист ГОСЗ/ОИО',
       positionDescription: 'Группа Обработки Сервисных Запросов, Отдел Информационного Обслуживания',
-      description: 'Специфическая работа по обслуживанию клиентов мобильной связи МТС'
+      description: 'Специфическая работа по обслуживанию клиентов мобильной связи МТС',
+      tags: 'Мобильные ТелеСистемы Mobile telesystems'
     },
     {
+      key: 3,
       from: 2011,
       to: 2013,
       title: 'SoftSeller.Su',
@@ -315,9 +376,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Индивидуальный предприниматель',
       positionDescription: 'Founder, CEO',
-      description: 'Интернет-магазин компьютерной техники, ПО и аксессуаров. Использовался Opencart, интеграция с Webmoney и Qiwi.'
+      description: 'Интернет-магазин компьютерной техники, ПО и аксессуаров. Использовался Opencart, интеграция с Webmoney и Qiwi.',
+      tags: 'ecommerce'
     },
     {
+      key: 2,
       from: 2010,
       to: 2013,
       title: 'GetWhite',
@@ -330,9 +393,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Индивидуальный предприниматель',
       positionDescription: 'Founder, CEO',
-      description: 'Выпуск и продажа дисков со свободным ПО для Windows.'
+      description: 'Выпуск и продажа дисков со свободным ПО для Windows.',
+      tags: 'ecommerce'
     },
     {
+      key: 1,
       from: 2008,
       to: 2008,
       title: 'SCI-сервис',
@@ -345,10 +410,11 @@ function About () {
       location: 'Ульяновск',
       position: 'Программист',
       positionDescription: 'Delphi, Web',
-      description: 'Облуживание вычислительной техники, разработка ПО, поддержка сайтов компании'
+      description: 'Облуживание вычислительной техники, разработка ПО, поддержка сайтов компании',
+      tags: ''
     }
   ]
-  return <div>
+  return <>
     <Head>
       <title key="title">Киселев Михаил Александрович (Ульяновск), образование и опыт работы</title>
       <meta
@@ -391,23 +457,29 @@ function About () {
     </Card>
     <p></p>
     <Card>
-      <Card.Header>Опыт работы</Card.Header>
+      <Card.Header>
+        Опыт работы
+        <FilterInput onClick={clickShowWorkFilter} onChange={changeWorkFilter} value={workFilter} show={workFilterShow} />
+      </Card.Header>
       <ListGroup variant="flush">
-        {work.map((item:WorkItem, key: any) => {
-          return GetWorkItem(item, key)
+        {work.filter((item: WorkItem) => { return checkItem(item, workFilter) }).map((item: WorkItem) => {
+          return GetWorkItem(item)
         })}
       </ListGroup>
     </Card>
     <p></p>
     <Card>
-      <Card.Header>Образование</Card.Header>
+      <Card.Header>
+        Образование
+        <FilterInput onClick={clickShowEducationFilter} onChange={changeEducationFilter} value={educationFilter} show={educationFilterShow} />
+      </Card.Header>
       <ListGroup variant="flush">
-        {education.map((item: EducationItem, key: any) => {
-          return GetEducationItem(item, key)
+        {education.filter((item: EducationItem) => { return checkItem(item, educationFilter) }).map((item: EducationItem) => {
+          return GetEducationItem(item)
         })}
       </ListGroup>
     </Card>
-  </div>
+  </>
 }
 
 export default About
