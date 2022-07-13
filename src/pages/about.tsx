@@ -4,7 +4,7 @@ import Head from 'next/head'
 import jsxToString from 'react-element-to-jsx-string'
 import FilterInput from '../components/filterInput'
 
-type EducationItem = {
+interface AboutItem {
   key: number,
   from: number,
   to: number,
@@ -13,30 +13,25 @@ type EducationItem = {
   site: Partial<string & boolean>,
   siteExists: boolean,
   location: string,
+  // eslint-disable-next-line
+  description: any,
+  tags: string
+}
+
+interface EducationItem extends AboutItem {
   faculty: Partial<string & boolean>,
   department: Partial<string & boolean>,
   speciality: string,
   value: string,
-  description: string,
-  tags: string
-};
-type WorkItem = {
-  key: number,
-  from: number,
-  to: number,
-  title: string,
-  image: Partial<string & boolean>,
-  site: Partial<string & boolean>,
-  siteExists: boolean,
+}
+
+interface WorkItem extends AboutItem {
   company: string,
   companyOGRN: number,
   companyDescription:string,
-  location: string,
   position: string,
   positionDescription: string,
-  description: any,
-  tags: string
-};
+}
 
 function checkItem (item: Partial<WorkItem & EducationItem>, str: string) {
   const values = Object.values(item)
@@ -52,7 +47,7 @@ function checkItem (item: Partial<WorkItem & EducationItem>, str: string) {
   return correct
 }
 
-function GetSiteLink (site: any, exists: boolean) {
+function GetSiteLink (site: Partial<boolean & string>, exists: boolean) {
   return <p><b>Сайт:</b> {exists ? <a target="_blank" rel="noreferrer" href={site}>{new URL(site).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(site).host}</span>}</p>
 }
 
