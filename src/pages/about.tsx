@@ -3,6 +3,8 @@ import { Card, ListGroup, Row, Col } from 'react-bootstrap'
 import Head from 'next/head'
 import jsxToString from 'react-element-to-jsx-string'
 import FilterInput from '../components/filterInput'
+import SiteLink from '../components/siteLink'
+import { Site } from '../types/simple'
 
 interface AboutItem {
   key: number,
@@ -10,8 +12,7 @@ interface AboutItem {
   to: number,
   title: string,
   image: Partial<string & boolean>,
-  site: Partial<string & boolean>,
-  siteExists: boolean,
+  site: Partial<Site & boolean>,
   location: string,
   // eslint-disable-next-line
   description: any,
@@ -36,19 +37,23 @@ interface WorkItem extends AboutItem {
 function checkItem (item: Partial<WorkItem & EducationItem>, str: string) {
   const values = Object.values(item)
   let correct = str.length === 0
-  values.map((val) => {
+  values.forEach((val) => {
     if ((typeof val === 'string' || typeof val === 'number') && val.toString().toLowerCase().includes(str.toLowerCase())) {
       correct = true
-    } else if (typeof val === 'object' && jsxToString(val).toLowerCase().includes(str.toLowerCase())) {
+    } else if (typeof val === 'object' && val.url?.toLowerCase().includes(str.toLowerCase())) {
+      correct = true
+    } else if (typeof val === 'object' && !val.url && jsxToString(val).toLowerCase().includes(str.toLowerCase())) {
       correct = true
     }
-    return []
   })
   return correct
 }
 
-function GetSiteLink (site: Partial<boolean & string>, exists: boolean) {
-  return <p><b>Сайт:</b> {exists ? <a target="_blank" rel="noreferrer" href={site}>{new URL(site).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(site).host}</span>}</p>
+function GetSiteLink (site: Partial<boolean & Site>) {
+  if (typeof site === 'boolean') {
+    return ''
+  }
+  return <p><b>Сайт:</b> <SiteLink site={site as Site}></SiteLink></p>
 }
 
 function GetWorkItem (item: WorkItem) {
@@ -68,7 +73,7 @@ function GetWorkItem (item: WorkItem) {
       </Col>
       <Col md={9} xl={10}>
         {item.companyDescription.length ? <p>{item.companyDescription}</p> : ''}
-        {item.site ? GetSiteLink(item.site, item.siteExists) : ''}
+        {item.site ? GetSiteLink(item.site) : ''}
         <p><b>Позиция:</b> {item.position} {item.positionDescription.length ? <span className="text-muted">({item.positionDescription})</span> : ''}</p>
         {item.description}
       </Col>
@@ -84,7 +89,7 @@ function GetEducationItem (item: EducationItem) {
         {item.from.toString()}{item.from !== item.to ? ' - ' + item.to.toString() : ''}
       </Col>
       <Col md={9} xl={10}>
-        {item.site ? GetSiteLink(item.site, item.siteExists) : ''}
+        {item.site ? GetSiteLink(item.site) : ''}
         {item.faculty ? <p><b>Факультет:</b> {item.faculty}</p> : ''}
         {item.department ? <p><b>Кафедра:</b> {item.department}</p> : ''}
         {item.speciality ? <p><b>Специальность:</b> {item.speciality}</p> : ''}
@@ -125,8 +130,10 @@ function About () {
       to: 2014,
       title: 'Институт Международного Права и Экономики им. А.С.Грибоедова (ульяновский филиал)',
       image: false,
-      site: 'http://iile.ru',
-      siteExists: true,
+      site: {
+        url: 'http://iile.ru',
+        exists: true
+      },
       location: 'Ульяновск',
       faculty: 'экономический',
       department: 'менеджмента и управления персоналом',
@@ -141,8 +148,10 @@ function About () {
       to: 2011,
       title: 'Ульяновский Государственный Университет',
       image: false,
-      site: 'http://ulsu.ru',
-      siteExists: true,
+      site: {
+        url: 'http://ulsu.ru',
+        exists: true
+      },
       location: 'Ульяновск',
       faculty: 'математики и информационных технологий (ФМиИТ)',
       department: 'информационных технологий',
@@ -157,8 +166,10 @@ function About () {
       to: 2008,
       title: 'Высший колледж УлГУ «Засвияжье»',
       image: false,
-      site: 'http://vkzas.ulsu.ru',
-      siteExists: false,
+      site: {
+        url: 'http://vkzas.ulsu.ru',
+        exists: false
+      },
       location: 'Ульяновск',
       faculty: false,
       department: false,
@@ -174,7 +185,6 @@ function About () {
       title: 'Средняя школа №52',
       image: false,
       site: false,
-      siteExists: false,
       location: 'Ульяновск',
       faculty: false,
       department: false,
@@ -192,7 +202,6 @@ function About () {
       title: 'ИП Киселев',
       image: false,
       site: false,
-      siteExists: false,
       company: 'ИП Киселев М.А.',
       companyOGRN: 321732500012734,
       companyDescription: '',
@@ -208,8 +217,10 @@ function About () {
       to: 2022,
       title: 'AZdoc',
       image: false,
-      site: 'https://azdoc.online/',
-      siteExists: true,
+      site: {
+        url: 'https://azdoc.online/',
+        exists: true
+      },
       company: 'ООО Симбирит',
       companyOGRN: 1077325005009,
       companyDescription: 'Облачный бэкэнд для мобильных и веб‑приложений.',
@@ -225,8 +236,10 @@ function About () {
       to: 2022,
       title: 'ОВОЩНОЙ73.РФ',
       image: false,
-      site: 'https://ovo73.ru/',
-      siteExists: true,
+      site: {
+        url: 'https://ovo73.ru/',
+        exists: true
+      },
       company: 'ИП Киселев М.А.',
       companyOGRN: 321732500012734,
       companyDescription: '',
@@ -242,8 +255,10 @@ function About () {
       to: 2021,
       title: 'Sreda',
       image: false,
-      site: 'https://sreda.one/',
-      siteExists: true,
+      site: {
+        url: 'https://sreda.one/',
+        exists: true
+      },
       company: 'ООО Эко-Сад',
       companyOGRN: 1207700340320,
       companyDescription: 'Стартап, основанный одним из топ-менеджеров Почта Банка, изначально позиционировался как онлайн-дача, т.е. то место, где пользователь может самостоятельно вырастить и получить экологически чистые овощи и фрукты.',
@@ -259,8 +274,10 @@ function About () {
       to: 2020,
       title: 'ЖК.онлайн',
       image: false,
-      site: 'https://zhk.online/',
-      siteExists: false,
+      site: {
+        url: 'https://zhk.online/',
+        exists: false
+      },
       company: 'ООО ЖК.ОНЛАЙН',
       companyOGRN: 1197325009518,
       companyDescription: 'Дочерняя компания CloudPayments, стартап в сфере ЖКХ (бывшее Оплачу)',
@@ -283,8 +300,10 @@ function About () {
       to: 2019,
       title: 'CloudPayments',
       image: false,
-      site: 'https://cloudpayments.ru/',
-      siteExists: true,
+      site: {
+        url: 'https://cloudpayments.ru/',
+        exists: true
+      },
       company: 'ООО КЛАУДПЭЙМЕНТС',
       companyOGRN: 1147746077159,
       companyDescription: 'Дочерняя компания TCS Group Holding PLC (Тинькофф), интернет-эквайринг',
@@ -300,8 +319,10 @@ function About () {
       to: 2019,
       title: 'Симбирские информационные технологии',
       image: false,
-      site: 'http://simbirit.ru',
-      siteExists: true,
+      site: {
+        url: 'http://simbirit.ru',
+        exists: true
+      },
       company: 'ООО Симбирит',
       companyOGRN: 1077325005009,
       companyDescription: 'Компания основана в 2007 как российская ветвь XIM Inc (США, Калифорния, Сан-Франциско).',
@@ -329,8 +350,10 @@ function About () {
       to: 2013,
       title: 'Симбирск доставка',
       image: false,
-      site: 'http://simbirskdostavka.ru',
-      siteExists: false,
+      site: {
+        url: 'http://simbirskdostavka.ru',
+        exists: false
+      },
       company: 'ИП Киселев М.А.',
       companyOGRN: 310732710400030,
       companyDescription: '',
@@ -346,8 +369,10 @@ function About () {
       to: 2012,
       title: 'МТС',
       image: false,
-      site: 'https://mts.ru',
-      siteExists: true,
+      site: {
+        url: 'https://mts.ru',
+        exists: true
+      },
       company: 'ОАО МТС',
       companyOGRN: 1027700149124,
       companyDescription: '',
@@ -363,8 +388,10 @@ function About () {
       to: 2013,
       title: 'SoftSeller.Su',
       image: false,
-      site: 'http://softseller.su',
-      siteExists: false,
+      site: {
+        url: 'http://softseller.su',
+        exists: false
+      },
       company: 'ИП Киселев М.А.',
       companyOGRN: 310732710400030,
       companyDescription: '',
@@ -380,8 +407,10 @@ function About () {
       to: 2013,
       title: 'GetWhite',
       image: false,
-      site: 'https://getwhite.ru',
-      siteExists: true,
+      site: {
+        url: 'https://getwhite.ru',
+        exists: true
+      },
       company: 'ИП Киселев М.А.',
       companyOGRN: 310732710400030,
       companyDescription: '',
@@ -397,8 +426,10 @@ function About () {
       to: 2008,
       title: 'SCI-сервис',
       image: false,
-      site: 'http://sci-service.info',
-      siteExists: false,
+      site: {
+        url: 'http://sci-service.info',
+        exists: false
+      },
       company: 'ИП Семенов С.Е.',
       companyOGRN: 308732709200110,
       companyDescription: '',
@@ -457,7 +488,9 @@ function About () {
         <FilterInput onClick={clickShowWorkFilter} onChange={changeWorkFilter} value={workFilter} show={workFilterShow} />
       </Card.Header>
       <ListGroup variant="flush">
-        {work.filter((item: WorkItem) => { return checkItem(item, workFilter) }).map((item: WorkItem) => {
+        {(work as Array<WorkItem>).filter((item: WorkItem) => {
+          return checkItem(item, workFilter)
+        }).map((item: WorkItem) => {
           return GetWorkItem(item)
         })}
       </ListGroup>
@@ -469,7 +502,9 @@ function About () {
         <FilterInput onClick={clickShowEducationFilter} onChange={changeEducationFilter} value={educationFilter} show={educationFilterShow} />
       </Card.Header>
       <ListGroup variant="flush">
-        {education.filter((item: EducationItem) => { return checkItem(item, educationFilter) }).map((item: EducationItem) => {
+        {(education as Array<EducationItem>).filter((item: EducationItem) => {
+          return checkItem(item, educationFilter)
+        }).map((item: EducationItem) => {
           return GetEducationItem(item)
         })}
       </ListGroup>
