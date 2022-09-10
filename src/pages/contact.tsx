@@ -46,7 +46,7 @@ function Contact () {
     <a className="contact-link contact-link-hh" title="HeadHunter" href="https://ulyanovsk.hh.ru/resume/f3a055e4ff064e22de0039ed1f773952703973">HH</a>
     <a className="contact-link contact-link-vk" title="VK" href="https://vk.com/mikhail_kiselev">VK</a>
     <a className="contact-link contact-link-ok" title="Odnoklassniki" href="https://ok.ru/mikhailkiselev">Odnoklassniki</a>
-    <p><b>E-mail:</b> <a href="mailto:kiselev@simbirsk.ru">kiselev@simbirsk.ru</a></p>
+    <p><b>E-mail:</b> <a href="mailto:mikhail@kiselev.su">mikhail@kiselev.su</a></p>
     <style jsx>{`
       .contact-link {
         font-size: 0px;
