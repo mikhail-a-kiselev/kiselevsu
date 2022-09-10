@@ -21,7 +21,7 @@ function GetMenuItem(item: TopNavItem, key:any, route:any) {
 function Topnav() {
   const links = [
     {"link": "/about", "text": texts.ABOUT, "description": texts.DESCRIPTION_ABOUT},
-//    {"link": "/portfolio", "text": texts.PORTFOLIO, "description": texts.DESCRIPTION_PORTFOLIO},
+    {"link": "/portfolio", "text": texts.PORTFOLIO, "description": texts.DESCRIPTION_PORTFOLIO},
     {"link": "/contact", "text": texts.CONTACT,  "description": texts.DESCRIPTION_CONTACT},
   ];
   const route = useRouter().route;
