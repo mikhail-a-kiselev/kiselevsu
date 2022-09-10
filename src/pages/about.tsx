@@ -3,11 +3,8 @@ import { Card, ListGroup, Row, Col } from 'react-bootstrap'
 import Head from 'next/head'
 import jsxToString from 'react-element-to-jsx-string'
 import FilterInput from '../components/filterInput'
-
-type Site = {
-  url: string,
-  exists:boolean
-}
+import SiteLink from '../components/siteLink'
+import { Site } from '../types/simple'
 
 interface AboutItem {
   key: number,
@@ -56,7 +53,7 @@ function GetSiteLink (site: Partial<boolean & Site>) {
   if (typeof site === 'boolean') {
     return ''
   }
-  return <p><b>Сайт:</b> {site.exists ? <a target="_blank" rel="noreferrer" href={site.url}>{new URL(site.url).host}</a> : <span title="Сайт в настоящее время не работает" className="text-muted">{new URL(site.url).host}</span>}</p>
+  return <p><b>Сайт:</b> <SiteLink site={site as Site}></SiteLink></p>
 }
 
 function GetWorkItem (item: WorkItem) {
