@@ -199,7 +199,7 @@ function Portfolio () {
         background-size: contain;
         background-position: center center;
         background-repeat: no-repeat;
-        background-color: rgba(0,0,0,.15);
+        background-color: rgba(13, 110, 253, 0.25);
       }
     `}</style>
   </>
