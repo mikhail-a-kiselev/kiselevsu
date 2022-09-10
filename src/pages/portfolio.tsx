@@ -155,8 +155,8 @@ function Portfolio () {
         />
     </Head>
     <Row>
-      {projects.map((item, i) => {
-        return <Col xs={12} sm={6} md={4} className="mb-3" key={i}>
+      {projects.map((item) => {
+        return <Col xs={12} sm={6} md={4} className="mb-3" key={item.key}>
           <Card>
             {(() => {
               switch (item.pics.length) {
@@ -178,8 +178,8 @@ function Portfolio () {
             }
           <Card.Body>
             <Card.Title>{item.title}</Card.Title>
-            {item.technologies.map((technology) => {
-              return <><Badge bg="primary">{technology}</Badge> </>
+            {item.technologies.map((technology, j) => {
+              return <span key={j}><Badge bg="primary">{technology}</Badge> </span>
             })}
               <Card.Text>
                 {item.description}
